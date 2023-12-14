@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Login </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="usuario">
+  <ion-card>
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <h2>
+
+          <div *ngIf="isRegister">
+               
+          <ion-item>
+            <ion-input
+              label="Nombre :"
+              labelPlacement="stacked"
+              placeholder=""
+              [(ngModel)]="usuario.nombre"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              label="Apellido :"
+              label-placement="stacked"
+              placeholder=""
+              [(ngModel)]="usuario.apellido"
+            ></ion-input>
+          </ion-item>
+          </div>
+
+          <ion-item>
+            <ion-input
+              label="Email :"
+              labelPlacement="stacked"
+              placeholder="Ingrese el email"
+              [(ngModel)]="usuario.email"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+          <p *ngIf="!onValidateEmail"   style="color: red;" >El email es invalido</p>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              
+              label="Password :"
+              label-placement="stacked"
+              placeholder="Ingrese el password"
+              [(ngModel)]="usuario.password"
+            ></ion-input>
+          </ion-item>
+       
+          <ion-item>
+
+          </ion-item>
+
+        </h2>
+      </ion-label>
+    </ion-item>
+    <ion-button  *ngIf="!isRegister" (click)="clickRegister()">Register</ion-button> 
+    <ion-button  *ngIf="isRegister" (click)="registerUser()">Register</ion-button> 
+    <ion-button  *ngIf="isRegister" (click)="clickLogin()">Login</ion-button>
+    <ion-button  *ngIf="!isRegister" (click)="loginUser()">Login</ion-button>
+
+  </ion-card>
+
+</ion-content>

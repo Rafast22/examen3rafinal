@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        [text]="getBackButtonText()"
+        defaultHref="/"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title> Amigos </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="usuarios">
+  <ion-card>
+    <ion-list>
+      <!-- NOMBRE Y APELLIDO DEL USUARIO-->
+      <ion-item *ngFor="let usuario of usuarios">
+        <ion-label  >{{usuario.id}} - {{usuario.name}} - {{usuario.last_name}}</ion-label>
+       
+        <ion-buttons slot="end">
+          <ion-button (click)="confirmDelete(usuario.id)">
+            <ion-icon slot="icon-only" name="trash-outline" style="font-size: 30px;"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+       
+    
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button [routerLink]="'/user-edit/0'">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

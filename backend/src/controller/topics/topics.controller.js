@@ -1,0 +1,244 @@
+const { sequelize } = require("../../connection");
+const { TopicsModel } = require("../../model/topics.model");
+const topicsService = require("../../service/topics.service");
+
+const listarTipicosUsuario = async function (req, res) {
+  try {
+    const topics = await topicsService.listarTipicosUsuario(req.params.filtro);
+    if (topics) {
+      res.json({
+        success: true,
+        topicos: topics,
+      });
+    } else {
+      res.json({
+        success: true,
+        topicos: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({
+      sucess: false,
+      error: error.message,
+    });
+  }
+};
+
+const consultarPorCodigo = async function (codigo) {
+  try {
+    const themesModelResult = await TopicModel.findByPk(codigo);
+    if (themesModelResult) {
+      return themesModelResult;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+
+const actualizar = async function (req, res) {
+  console.log("actualizar topicos controller");
+
+  let topicsReturn = null;
+
+  try {
+    topicsReturn = await topicsService.actualizar(
+      req.body.id,
+      req.body.create_date,
+      req.body.name,
+      req.body.topic_id,
+      req.body.order,
+      req.body.priority,
+      req.body.color,
+      req.body.owner_user_id
+    );
+    res.json({
+      success: true,
+      topic: topicsReturn,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const create = async function (req, res) {
+  console.log("actualizar topicos controller");
+
+  let topicsReturn = null;
+
+  try {
+    topicsReturn = await topicsService.create(
+      req.body.name,
+      req.body.owner_user_id,
+      
+    );
+
+if(topicsReturn){
+  res.json({
+    success: true,
+    topic: topicsReturn,
+  });
+}
+else{
+  res.json({
+    success: false,
+    topic: topicsReturn,
+  });
+}
+
+    
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const eliminar = async function (req, res) {
+  console.log("eliminar topicos controller");
+  try {
+    await topicsService.eliminar(req.params.filtro || "");
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const listarComentarios = async function (req, res) {
+  console.log("listar comentarios topicos controller", req, res);
+  try {
+    const comments = await topicsService.listarComentarios(
+      req.params.topic_id || ""
+    );
+    if (comments) {
+      res.json({
+        success: true,
+        topicos: comments,
+      });
+    } else {
+      res.json({
+        success: true,
+        topicos: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({
+      sucess: false,
+      error: error.message,
+    });
+  }
+};
+
+const comentarTopicoController = async function (req, res) {
+  try {
+    // Recibir los datos del comentario del cuerpo de la solicitud
+    const comentarioData = req.body;
+
+    // Llamar al servicio para guardar el comentario
+    const topicsReturn = await topicsService.comentarTopicoService(comentarioData);
+
+    res.json({
+      success: true,
+      topic: topicsReturn,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const compartirUsuariosController = async function (req, res) {
+  try {
+    const dataSharedTopics = req.body;
+
+    const sharedTopicsReturn = await topicsService.compartirUsuariosService(dataSharedTopics);
+
+    res.json({
+      success: true,
+      topic: sharedTopicsReturn,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+const listarSharedMeController = async function (req, res) {
+  console.log("listarSharedMe topicos controller");
+  try {
+    const topics = await topicsService.listarSharedMeService(req.params.id || "");
+    if (topics) {
+      res.json({
+        success: true,
+        topicos: topics,
+      });
+    } else {
+      res.json({
+        success: true,
+        topicos: [],
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({
+      sucess: false,
+      error: error.message,
+    });
+  }
+};
+const changeOrder = async function (req, res) {
+
+  let topicsReturn = null;
+
+  try {
+    topicsReturn = await topicsService.changeOrder(
+      req.body.from,
+      req.body.to,
+    );
+
+
+
+    
+  } catch (error) {
+    console.log(error);
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  listarTipicosUsuario,
+  actualizar,
+  consultarPorCodigo,
+  eliminar,
+  listarComentarios,
+  comentarTopicoController,
+  compartirUsuariosController,
+  listarSharedMeController,
+  create,
+  changeOrder,
+};

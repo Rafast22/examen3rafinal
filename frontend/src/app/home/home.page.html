@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Study App</ion-title>
+    <ion-label  style=" font-size: 10px; display: flex; align-self: center; ">{{username}}</ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarSesion()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-refresher slot="fixed" (ionRefresh)="refresh($event)">
+  <ion-refresher-content></ion-refresher-content>
+</ion-refresher>
+
+<ion-content [fullscreen]="true" *ngIf="temas">
+  <!-- Botones de Navegacion -->
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="topics">
+        <ion-icon name="document-text-outline"></ion-icon>
+        Topicos
+      </ion-tab-button>
+      <ion-tab-button tab="themes">
+        <ion-icon name="document-text-outline"></ion-icon>
+        Temas
+      </ion-tab-button>
+      <ion-tab-button tab="shared">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        Amigos
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+ 
+
+
+</ion-content>

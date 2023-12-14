@@ -1,0 +1,51 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [text]="getBackButtonText()" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title> Temas </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="temas">
+  <ion-card>
+    <ion-card-header class="comment-author">
+      Ordenar por:
+    </ion-card-header>
+    <ion-card-content>
+      <div class="icon-row">
+        <ion-button color="dark" fill="outline" (click)="sortAZ()">A-Z</ion-button>
+        <ion-button color="dark" fill="outline" (click)="sortZA()">Z-A</ion-button>
+        <ion-button color="dark" fill="outline" (click)="sortIdAsc()">ID Asc</ion-button>
+        <ion-button color="dark" fill="outline" (click)="sortIdDesc()">ID Desc</ion-button>
+      </div>
+    </ion-card-content>
+  
+    <ion-list>
+      <ion-reorder-group [disabled]="false" (ionItemReorder)="reorder($event)">
+        <!-- NOMBRE Y DESCRIPCION DEL TEMA-->
+        <ion-item *ngFor="let tema of temas">
+          <ion-label [routerLink]="'/theme-edit/'+tema.id">{{tema.id}} - {{tema.name}} -
+            {{tema.description}}</ion-label>
+          <ion-buttons slot="end">
+            <ion-button [routerLink]="'/theme-edit/'+tema.id">
+              <ion-icon style=" font-size: 30px;" slot="icon-only" name="create-outline" ></ion-icon>
+            </ion-button>
+            <ion-button (click)="confirmDelete(tema.id)">
+              <ion-icon  style=" font-size: 30px;" slot="icon-only" name="trash-outline" > </ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-reorder slot="end"></ion-reorder>
+        </ion-item>
+      </ion-reorder-group>
+
+    </ion-list>
+  </ion-card> 
+
+  <!-- AGREGAR TEMA-->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button [routerLink]="'/theme-edit/0'">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
